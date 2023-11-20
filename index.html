@@ -1,0 +1,41 @@
+<html>
+<head>
+    <title>Meal APP</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <!-- Navigation bar-->
+    <header>
+        <nav class="navbar">
+            <div class="container">
+                <h1>Meal App</h1>
+            </div>
+        </nav>
+    </header>
+    
+
+    <main class="container">
+        <div id="app">
+            <!-- favourites Meals List-->
+            <div id="favourites" class="mt-4">
+                <h2>My Favourite Meals</h2>
+                <ul id="favouritesList"></ul>
+            </div>
+
+            <!-- Meal Search bar-->
+            <div id="search">
+                <h1> Search for meal</h1>
+                <input type="text" id="searchInput" placeholder="Search meals..." class="form control mb-3">
+                <div class="main">
+                    <div id="meal-details"></div>
+                </div>
+                <div id="searchResults">      
+                </div>
+            </div>
+            <br>
+            <br>
+        </div>
+    </main>
+    <script src="script.js"></script>
+</body>
+</html>
