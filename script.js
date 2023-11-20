@@ -9,6 +9,8 @@ const favouritesList = document.getElementById('favouritesList');
 searchInput.addEventListener('input',searchMeal);
 favouritesList.addEventListener('click',removeFromFavourites);
 
+
+//  Searching for Meal
 function searchMeal(){
     const searchQuery = searchInput.value.trim();
     if(searchQuery === ''){
@@ -58,6 +60,8 @@ function searchMeal(){
         });
 }
 
+
+// Showing details of Meal
 async function showMealDetails(id) {
     try {
         const response = await fetch(`https://www.themealdb.com/api/json/v1/1/lookup.php?i=${id}`);
@@ -88,6 +92,8 @@ async function showMealDetails(id) {
         console.error('Error: ', error);
     }
 }
+
+// Adding Meal To Favourites
 function addToFavourites(event){
     const mealId = event.target.dataset.id;
 
@@ -98,6 +104,7 @@ function addToFavourites(event){
     }
 }
 
+// Removing Meal from Favourite
 function removeFromFavourites(event){
     if(event.target.classList.contains('remove-btn')){
         const mealId = event.target.dataset.id;
@@ -106,10 +113,13 @@ function removeFromFavourites(event){
         displayFavourites();
     }
 }
+
+// Saving Favourite meal to local Storage 
 function saveFavouritesToLocalStorage(){
     localStorage.setItem('favourites' , JSON.stringify(favourites));
 }
 
+//get favourite meal from local storage
 function loadFavouritesFromLocalStorage(){
     const favouritesData = localStorage.getItem('favourites');
     if(favouritesData){
@@ -118,6 +128,7 @@ function loadFavouritesFromLocalStorage(){
     }
 }
 
+// showing Favourite Meals
 function displayFavourites(){
     if(favourites.length === 0){
         favouritesList.innerHTML = "<p> No Favourite meals yet !</p>";
@@ -149,7 +160,7 @@ function displayFavourites(){
                 });
         });
     }
-    
 }
 
+//loading favourtie meals
 loadFavouritesFromLocalStorage();
