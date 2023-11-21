@@ -9,8 +9,6 @@ const favouritesList = document.getElementById('favouritesList');
 searchInput.addEventListener('input',searchMeal);
 favouritesList.addEventListener('click',removeFromFavourites);
 
-
-//  Searching for Meal
 function searchMeal(){
     const searchQuery = searchInput.value.trim();
     if(searchQuery === ''){
@@ -25,25 +23,24 @@ function searchMeal(){
             } else {
                 const mealItems = data.meals.map(meal => {
                     const mealItem = document.createElement('div');
-                    mealItem.classList.add('card', 'mb-3', 'row', 'g-0');
+                    mealItem.classList.add('card');
                     mealItem.innerHTML = `
-                   <div class="row g-0">
-                        <div class="col-md-4">
-                            <h5 class="card-title">${meal.strMeal}</h5>
-                            <div class="d-flex">
-                                <img src="${meal.strMealThumb}" alt="${meal.strMeal}" class="img-fluid rounded-start me-2">
-                                
+                    <div class="row">
+                            <div class="col">
+                                <h5 class="card-title">${meal.strMeal}</h5>
+                                <div class="d-flex">
+                                    <img src="${meal.strMealThumb}" alt="${meal.strMeal}"> 
+                                </div>
                             </div>
-                        </div>
-                        
-                        <div class="col-md-8">
-                            <div class="card-body">
-                                <button type="button" class="moreDetails"  onClick="showMealDetails(${meal.idMeal})">More Details</button>
-                                <button type="button" class="addToFav" data-id="${meal.idMeal}">Add Favourites</button>
+                            
+                            <div class="col">
+                                <div class="card-body">
+                                    <button type="button" class="moreDetails"  onClick="showMealDetails(${meal.idMeal})">More Details</button>
+                                    <button type="button" class="addToFav" data-id="${meal.idMeal}">Add Favourites</button>
+                                </div>
                             </div>
-                        </div>
-                    </div>                    
-                `;
+                        </div>                    
+                    `;
                     return mealItem;
                 });
 
@@ -60,8 +57,6 @@ function searchMeal(){
         });
 }
 
-
-// Showing details of Meal
 async function showMealDetails(id) {
     try {
         const response = await fetch(`https://www.themealdb.com/api/json/v1/1/lookup.php?i=${id}`);
@@ -72,18 +67,18 @@ async function showMealDetails(id) {
         }
         const meal = data.meals[0];
         const html = `
-            <div id="meal-details" class="mb-5">
-                <div id="meal-header" class="d-flex justify-content-around flex-wrap">
+            <div id="meal-details">
+                <div id="meal-header">
                     <div id="meal-thumbnail">
-                        <img class="mb-2" src="${meal.strMealThumb}" alt="${meal.strMeal}" height="300px" width="300px">
+                        <img src="${meal.strMealThumb}" alt="${meal.strMeal}" height="300px" width="300px">
                     </div>
                     <div id="details">
                         <h1>Name: ${meal.strMeal}</h1>
                         <h3>Category: ${meal.strCategory}</h3>
                     </div>
                 </div>
-                <div id="meal-instruction" class="mt-3">
-                    <h3 class="text-center">Instruction:</h3>
+                <div id="meal-instruction">
+                    <h3>Instruction:</h3>
                     <p>${meal.strInstructions}</p>
                 </div>
             </div>`;
@@ -92,8 +87,6 @@ async function showMealDetails(id) {
         console.error('Error: ', error);
     }
 }
-
-// Adding Meal To Favourites
 function addToFavourites(event){
     const mealId = event.target.dataset.id;
 
@@ -104,7 +97,6 @@ function addToFavourites(event){
     }
 }
 
-// Removing Meal from Favourite
 function removeFromFavourites(event){
     if(event.target.classList.contains('remove-btn')){
         const mealId = event.target.dataset.id;
@@ -113,13 +105,10 @@ function removeFromFavourites(event){
         displayFavourites();
     }
 }
-
-// Saving Favourite meal to local Storage 
 function saveFavouritesToLocalStorage(){
     localStorage.setItem('favourites' , JSON.stringify(favourites));
 }
 
-//get favourite meal from local storage
 function loadFavouritesFromLocalStorage(){
     const favouritesData = localStorage.getItem('favourites');
     if(favouritesData){
@@ -128,7 +117,6 @@ function loadFavouritesFromLocalStorage(){
     }
 }
 
-// showing Favourite Meals
 function displayFavourites(){
     if(favourites.length === 0){
         favouritesList.innerHTML = "<p> No Favourite meals yet !</p>";
@@ -143,11 +131,11 @@ function displayFavourites(){
                     listItem.classList.add('list-group-item');
                     listItem.innerHTML = `
                     <div class="fav">
-                        <div class="col-2">
+                        <div>
                             <h1>${meal.strMeal}</h1>
                             <img src="${meal.strMealThumb}" alt="${meal.strMeal}" heigth="200px"; width="200px">
                         </div>
-                        <div class="col-2">
+                        <div >
                             <button type="button" class="moreDetails"  onClick="showMealDetails(${meal.idMeal})">More Details</button>
                             <button type="button" class="removeFromFav btn-sm remove-btn" data-id="${meal.idMeal}">Remove</button>
                         </div>
@@ -160,7 +148,7 @@ function displayFavourites(){
                 });
         });
     }
+    
 }
 
-//loading favourtie meals
 loadFavouritesFromLocalStorage();
