@@ -37,7 +37,7 @@ JavaScript
 
 
 Demo
-live demo of the application at   https://app.netlify.com/sites/jovial-strudel-f88c5c/overview
+live demo of the application at  https://jovial-strudel-f88c5c.netlify.app
 
 Authors
 @manishmeena022
